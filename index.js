@@ -1,8 +1,12 @@
 const apiKey = 'ed073be48ab9f72b4a7aad430b248120';
-const apiUrl = 'https://api.openweathermap.org/data/2.5/weather?units=metric&q=kazakhstan'
+const apiUrl = 'https://api.openweathermap.org/data/2.5/weather?units=metric&q=';
 
-async function checkWeather(){
-    const response = await fetch(apiUrl + `&appid=${apiKey}`);
+const searchBox = document.querySelector('.search input');
+const searchBtn = document.querySelector('.search button');
+
+
+async function checkWeather(city){
+    const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
     const data = await response.json();
 
     console.log(data);
@@ -11,6 +15,10 @@ async function checkWeather(){
     document.querySelector('.temp').innerHTML = Math.round(data.main.temp) + '°c';
     document.querySelector('.humidity').innerHTML = data.main.humidity + '%';
     document.querySelector('.wind').innerHTML = data.wind.speed + " km/hr";
+
 }
 
-checkWeather()
+searchBtn.addEventListener('click', () => {
+    checkWeather(searchBox.value)
+})
+
